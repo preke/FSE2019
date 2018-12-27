@@ -64,9 +64,9 @@ def covert_to_tab(input_path, output_path):
             except:
                 print(line)
             file_writer.write(
-                re.sub('[\s+\.\!\/_,$%^*(+\"\')]+|[+——()?【】“”！，。？、~@#￥%……&*（）]+', ' ', tmp_list[4].strip()))
+                re.sub('[\s+\.\!\/_,$%^*(+\")]+|[+——()?【】“”！，。？、~@#￥%……&*（）]+', ' ', tmp_list[4].strip()))
             file_writer.write('\t')
             file_writer.write(
-                re.sub('[\s+\.\!\/_,$%^*(+\"\')]+|[+——()?【】“”！，。？、~@#￥%……&*（）]+', ' ', tmp_list[5].strip()))
+                re.sub('[\s+\.\!\/_,$%^*(+\")]+|[+——()?【】“”！，。？、~@#￥%……&*（）]+', ' ', tmp_list[5].strip()))
             file_writer.write('\n')
     file_writer.close()
