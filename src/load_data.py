@@ -59,7 +59,10 @@ def covert_to_tab(input_path, output_path):
     file_writer = open(output_path, 'wb')
     with open(input_path, 'rb') as file_reader:
         for line in file_reader:
-            tmp_list = line.split('***')
+            try:
+                tmp_list = line.split('***')
+            except:
+                print line
             file_writer.write(
                 re.sub('[\s+\.\!\/_,$%^*(+\"\')]+|[+——()?【】“”！，。？、~@#￥%……&*（）]+', ' ', tmp_list[4].strip()))
             file_writer.write('\t')
