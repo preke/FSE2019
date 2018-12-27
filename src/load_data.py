@@ -11,10 +11,7 @@ from sklearn.utils import shuffle
 import torchtext.datasets as datasets
 import pickle
 
-# PATH
-TRAIN_PATH = '../data/single_train_data.txt'
-VALID_PATH = '../data/single_valid_data.txt'
-TEST_PATH = '../data/single_test_data.txt'
+
 
 def load_glove_as_dict(filepath):
     word_vec = {}
