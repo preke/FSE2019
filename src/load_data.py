@@ -56,8 +56,8 @@ def covert_to_tab(input_path, output_path):
     This function generate a tsv file of post & response
     for each instance in the source file
     '''
-    file_writer = open(output_path, 'wb')
-    with open(input_path, 'rb') as file_reader:
+    file_writer = open(output_path, 'w')
+    with open(input_path, 'r') as file_reader:
         for line in file_reader:
             try:
                 tmp_list = line.split('***')
