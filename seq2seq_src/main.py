@@ -105,10 +105,11 @@ if __name__ == '__main__':
 	# Dir. 
 	parser.add_argument('--log', type=str, default='log')
 	parser.add_argument('--sample', type=str, default='sample')
-	
+
 	# Misc.
 	parser.add_argument('--gpu_num', type=int, default=0)
 
 	args = parser.parse_args()
+	args.device = torch.device('cuda')
 	print (args)
 	main(args)
