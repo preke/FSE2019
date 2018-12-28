@@ -33,6 +33,20 @@ def covert_to_tab(input_path, output_path):
     file_writer.close()
 
 
+def split_source_target(input_path, output_dir):
+    src_writer = open(os.path.join(output_dir, 'src.txt'), 'w')
+    trg_writer = open(os.path.join(output_dir, 'trg.txt'), 'w')
+    with open(input_path, 'r') as file_reader:
+        for line in file_reader:
+            tmp_list = line.split('\t')
+            src_writer.write(tmp_list[0])
+            src_writer.write('\n')
+            trg_writer.write(tmp_list[1])
+            trg_writer.write('\n')
+    src_writer.close()
+    trg_writer.close()
+
+
 def load_glove_as_dict(filepath):
     word_vec = {}
     with open(filepath) as fr:
