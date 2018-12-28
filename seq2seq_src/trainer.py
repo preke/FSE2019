@@ -77,6 +77,7 @@ class Trainer(object):
         self.scheduler = optim.lr_scheduler.StepLR(self.optimizer, 1, gamma=0.8)
 
         if torch.cuda.is_available():
+            print('Cuda Available!')
             self.model.cuda()
 
         print (self.model)

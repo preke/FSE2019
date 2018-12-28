@@ -59,10 +59,10 @@ def main(args):
 
     train_loader = data.BucketIterator(dataset=train_dataset, batch_size=args.batch_size,
                                        repeat=False, shuffle=True, sort_within_batch=True,
-                                       sort_key=lambda x: len(x.src))
+                                       sort_key=lambda x: len(x.src), device=args.device)
     val_loader = data.BucketIterator(dataset=val_dataset, batch_size=args.batch_size,
                                      repeat=False, shuffle=True, sort_within_batch=True,
-                                     sort_key=lambda x: len(x.src))
+                                     sort_key=lambda x: len(x.src), device=args.device)
 
     # text_field, train_data, train_iter, valid_data, valid_iter, test_data, test_iter = load_data(args, TRAIN_TAB_PATH,
     #                                                                                              VALID_TAB_PATH,
@@ -109,6 +109,6 @@ if __name__ == '__main__':
     parser.add_argument('--gpu_num', type=int, default=0)
 
     args = parser.parse_args()
-    # args.device = torch.device('cpu')
+    args.device = torch.device('cuda')
     print (args)
     main(args)
