@@ -12,7 +12,7 @@ import argparse
 import pandas as pd
 import numpy as np
 from src.load_data import covert_to_tab, load_data
-from train import train
+# from train import train
 
 
 # PATH
