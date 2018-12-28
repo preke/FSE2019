@@ -30,31 +30,31 @@ from trainer import *
 
 def main(args):
 	# cuda.set_device(int(args.gpu_num))
-	# cudnn.benchmark = True
-	#
-	# # Load dataset
-	# train_file = os.path.join(args.data_path, "data_{}_{}_{}_{}.json".format(args.dataset, args.src_lang,
-	# 									args.trg_lang, args.max_len))
-	# val_file = os.path.join(args.data_path, "data_dev_{}_{}_{}.json".format(args.src_lang, args.trg_lang, args.max_len))
-	#
-	# start_time = time.time()
-	# if os.path.isfile(train_file) and os.path.isfile(val_file):
-	# 	print ("Loading data..")
-	# 	dp = DataPreprocessor()
-	# 	train_dataset, val_dataset, vocabs = dp.load_data(train_file, val_file)
-	# else:
-	# 	print ("Preprocessing data..")
-	# 	dp = DataPreprocessor()
-	# 	train_dataset, val_dataset, vocabs = dp.preprocess(args.train_path, args.val_path, train_file, val_file,
-	# 							   args.src_lang, args.trg_lang, args.max_len)
-	#
-	#
-	# print ("Elapsed Time: %1.3f \n"  %(time.time() - start_time))
-	#
-	# print ("=========== Data Stat ===========")
-	# print ("Train: ", len(train_dataset))
-	# print ("val: ", len(val_dataset))
-	# print ("=================================")
+	cudnn.benchmark = True
+
+	# Load dataset
+	train_file = os.path.join(args.data_path, "data_{}_{}_{}_{}.json".format(args.dataset, args.src_lang,
+										args.trg_lang, args.max_len))
+	val_file = os.path.join(args.data_path, "data_dev_{}_{}_{}.json".format(args.src_lang, args.trg_lang, args.max_len))
+
+	start_time = time.time()
+	if os.path.isfile(train_file) and os.path.isfile(val_file):
+		print ("Loading data..")
+		dp = DataPreprocessor()
+		train_dataset, val_dataset, vocabs = dp.load_data(train_file, val_file)
+	else:
+		print ("Preprocessing data..")
+		dp = DataPreprocessor()
+		train_dataset, val_dataset, vocabs = dp.preprocess(args.train_path, args.val_path, train_file, val_file,
+								   args.src_lang, args.trg_lang, args.max_len)
+
+
+	print ("Elapsed Time: %1.3f \n"  %(time.time() - start_time))
+
+	print ("=========== Data Stat ===========")
+	print ("Train: ", len(train_dataset))
+	print ("val: ", len(val_dataset))
+	print ("=================================")
 
 
 
@@ -66,14 +66,14 @@ def main(args):
 	#                                  repeat=False, shuffle=True, sort_within_batch=True,
 	#                                  sort_key=lambda x: len(x.src))
 
-	text_field, train_data, train_iter, valid_data, valid_iter, test_data, test_iter = \
-		load_data(args, TRAIN_TAB_PATH, VALID_TAB_PATH, TEST_TAB_PATH)
+	# text_field, train_data, train_iter, valid_data, valid_iter, test_data, test_iter = \
+	# 	load_data(args, TRAIN_TAB_PATH, VALID_TAB_PATH, TEST_TAB_PATH)
+	#
+	# text_field.build_vocab(train_data, valid_data)
 
-	text_field.build_vocab(train_data, valid_data)
 
-
-	trainer = Trainer(train_iter, valid_iter, args)
-	trainer.train()
+	# trainer = Trainer(train_iter, valid_iter, args)
+	# trainer.train()
 
 
 if __name__ == '__main__':
@@ -81,7 +81,7 @@ if __name__ == '__main__':
 	parser = argparse.ArgumentParser()
 
 	# Language setting
-	# parser.add_argument('--dataset', type=str, default='europarl')
+	parser.add_argument('--dataset', type=str, default='europarl')
 	parser.add_argument('--src_lang', type=str, default='fr')
 	parser.add_argument('--trg_lang', type=str, default='en')
 	parser.add_argument('--max_len', type=int, default=50)
