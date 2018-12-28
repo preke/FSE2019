@@ -72,7 +72,7 @@ def main(args):
     # args.embed_num = len(text_field.vocab)
 
 
-    trainer = Trainer(train_iter, valid_iter, vocabs, args)
+    trainer = Trainer(train_loader, val_loader, vocabs, args)
     trainer.train()
 
 
