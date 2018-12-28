@@ -66,7 +66,8 @@ def main(args):
 	                                 repeat=False, shuffle=True, sort_within_batch=True,
 	                                 sort_key=lambda x: len(x.src))
 	for i, batch in enumerate(tqdm(train_loader)):
-		print(batch.shape)
+		print(batch.src.shape)
+		print(batch.trg.shape)
 		break
 
 	# text_field, train_data, train_iter, valid_data, valid_iter, test_data, test_iter = \
