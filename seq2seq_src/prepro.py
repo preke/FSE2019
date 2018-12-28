@@ -118,7 +118,6 @@ class DataPreprocessor(object):
     def generate_data(self, data_path, max_len=None):
         dataset = MaxlenTranslationDataset(
             path=data_path,
-            exts=(exts),
             fields=(self.src_field, self.trg_field),
             max_len=max_len)
 
