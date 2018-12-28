@@ -29,7 +29,7 @@ from trainer import *
 
 
 def main(args):
-    # cuda.set_device(int(args.gpu_num))
+    cuda.set_device(int(args.gpu_num))
     cudnn.benchmark = True
 
     # Load dataset
@@ -109,6 +109,6 @@ if __name__ == '__main__':
     parser.add_argument('--gpu_num', type=int, default=0)
 
     args = parser.parse_args()
-    args.device = torch.device('cpu')
+    # args.device = torch.device('cpu')
     print (args)
     main(args)

@@ -12,7 +12,7 @@ class Encoder(nn.Module):
         self.hidden_dim = hidden_dim
         
         self.embedding = nn.Embedding(vocab_size, embed_dim)
-        self.gru = nn.GRU(embed_dim, self.hidden_dim, self.num_layers, batch_first=True, bidirectional=True, )
+        self.gru = nn.GRU(embed_dim, self.hidden_dim, self.num_layers, batch_first=True, bidirectional=True)
         
     def forward(self, source, src_length=None, hidden=None):
         '''
