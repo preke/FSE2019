@@ -4,6 +4,8 @@ import argparse
 import pandas as pd
 import numpy as np
 from load_data import covert_to_tab, load_data
+from model import DecoderRNN, EncoderRNN
+from train import train
 
 
 # PATH
@@ -33,9 +35,15 @@ parser.add_argument('-early-stop', type=int, default=1000, help='iteration numbe
 parser.add_argument('-save-best', type=bool, default=True, help='whether to save when get best performance')
 args = parser.parse_args()
 args.device = torch.device('cuda')
+
 # load data
 text_field, train_data, train_iter, valid_data, valid_iter, test_data, test_iter = \
     load_data(args, TRAIN_TAB_PATH, VALID_TAB_PATH, TEST_TAB_PATH)
 
 text_field.build_vocab(train_data, valid_data)
+
 # train model
+args.word_embedding_num = len(text_field.vocab)
+args.word_embedding_length = 300
+train(train_iter=train_iter, vali_iter=valid_iter, args=args)
+
