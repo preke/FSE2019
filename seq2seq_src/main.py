@@ -13,7 +13,7 @@ import pandas as pd
 import numpy as np
 from src.load_data import covert_to_tab, load_data
 # from train import train
-
+from tqdm import tqdm
 
 # PATH
 TRAIN_PATH = '../data/single_train_data.txt'
@@ -59,12 +59,15 @@ def main(args):
 
 
 
-	# train_loader = data.BucketIterator(dataset=train_dataset, batch_size=args.batch_size,
-	#                                    repeat=False, shuffle=True, sort_within_batch=True,
-	#                                    sort_key=lambda x: len(x.src))
-	# val_loader = data.BucketIterator(dataset=val_dataset, batch_size=args.batch_size,
-	#                                  repeat=False, shuffle=True, sort_within_batch=True,
-	#                                  sort_key=lambda x: len(x.src))
+	train_loader = data.BucketIterator(dataset=train_dataset, batch_size=args.batch_size,
+	                                   repeat=False, shuffle=True, sort_within_batch=True,
+	                                   sort_key=lambda x: len(x.src))
+	val_loader = data.BucketIterator(dataset=val_dataset, batch_size=args.batch_size,
+	                                 repeat=False, shuffle=True, sort_within_batch=True,
+	                                 sort_key=lambda x: len(x.src))
+	for i, batch in enumerate(tqdm(train_loader)):
+		print(batch.shape)
+		break
 
 	# text_field, train_data, train_iter, valid_data, valid_iter, test_data, test_iter = \
 	# 	load_data(args, TRAIN_TAB_PATH, VALID_TAB_PATH, TEST_TAB_PATH)
