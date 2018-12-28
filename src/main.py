@@ -45,5 +45,5 @@ text_field.build_vocab(train_data, valid_data)
 # train model
 args.word_embedding_num = len(text_field.vocab)
 args.word_embedding_length = 300
-train(train_iter=train_iter, vali_iter=valid_iter, args=args)
+train(train_iter=train_iter, valid_iter=valid_iter, args=args)
 

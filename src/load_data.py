@@ -69,7 +69,7 @@ def gen_iter(path, text_field, args):
 
 
 def load_data(args, TRAIN_TAB_PATH, VALID_TAB_PATH, TEST_TAB_PATH):
-    text_field = data.Field(sequential=True, use_vocab=True, batch_first=True, lower=True)
+    text_field = data.Field(sequential=True, use_vocab=True, batch_first=True, lower=True, eos_token='<EOS>')
 
     train_data, train_iter = gen_iter(TRAIN_TAB_PATH, text_field, args)
     valid_data, valid_iter = gen_iter(VALID_TAB_PATH, text_field, args)
