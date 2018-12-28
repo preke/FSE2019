@@ -63,7 +63,7 @@ def gen_iter(path, text_field, args):
                     tmp_data,
                     batch_size=args.batch_size,
                     sort_key=lambda x: len(x.question1),
-                    device=0,
+                    device=args.device,
                     repeat=False)
     return tmp_data, tmp_iter
 
