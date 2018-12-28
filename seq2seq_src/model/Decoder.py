@@ -37,7 +37,9 @@ class Decoder(nn.Module):
             target = self.embed(target)  
             for i in range(target_len):
                 ctx = self.attention(enc_h, prev_s)                     
-                prev_s = self.decodercell(target[:, i], prev_s, ctx)       
+                prev_s = self.decodercell(target[:, i], prev_s, ctx)
+                print(prev_s.size())
+                print(dec_h.size())
                 dec_h[:,i,:] = prev_s.unsqueeze(1)
 
             outputs = self.dec2word(dec_h)
