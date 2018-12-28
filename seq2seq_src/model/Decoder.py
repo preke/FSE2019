@@ -40,6 +40,8 @@ class Decoder(nn.Module):
                 prev_s = self.decodercell(target[:, i], prev_s, ctx)
                 print(prev_s.size())
                 print(dec_h.size())
+                print(dec_h[:,i,:].size())
+                print(prev_s.unsqueeze(1).size())
                 dec_h[:,i,:] = prev_s.unsqueeze(1)
 
             outputs = self.dec2word(dec_h)
