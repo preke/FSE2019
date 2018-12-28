@@ -3,7 +3,6 @@ from torchtext import data
 from torchtext import datasets
 import time
 import re
-import spacy
 import os 
 from tqdm import tqdm
 
@@ -103,14 +102,14 @@ class DataPreprocessor(object):
 		torch.save(dataset, data_file)
 
 	def generate_fields(self):     
-	    src_field = data.Field(tokenize=data.get_tokenizer('spacy'), 
+	    src_field = data.Field(
 	                           init_token=SOS_WORD,
 	                           eos_token=EOS_WORD,
 	                           pad_token=PAD_WORD,
 	                           include_lengths=True,
 	                           batch_first=True)
 	    
-	    trg_field = data.Field(tokenize=data.get_tokenizer('spacy'), 
+	    trg_field = data.Field(
 	                           init_token=SOS_WORD,
 	                           eos_token=EOS_WORD,
 	                           pad_token=PAD_WORD,
