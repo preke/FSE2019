@@ -30,54 +30,58 @@ from trainer import *
 
 def main(args):
 	# cuda.set_device(int(args.gpu_num))
-	cudnn.benchmark = True
+	# cudnn.benchmark = True
+    #
+	# # Load dataset
+	# train_file = os.path.join(args.data_path, "data_{}_{}_{}_{}.json".format(args.dataset, args.src_lang,
+	# 									args.trg_lang, args.max_len))
+	# val_file = os.path.join(args.data_path, "data_dev_{}_{}_{}.json".format(args.src_lang, args.trg_lang, args.max_len))
+    #
+	# start_time = time.time()
+	# if os.path.isfile(train_file) and os.path.isfile(val_file):
+	# 	print ("Loading data..")
+	# 	dp = DataPreprocessor()
+	# 	train_dataset, val_dataset, vocabs = dp.load_data(train_file, val_file)
+	# else:
+	# 	print ("Preprocessing data..")
+	# 	dp = DataPreprocessor()
+	# 	train_dataset, val_dataset, vocabs = dp.preprocess(args.train_path, args.val_path, train_file, val_file,
+	# 							   args.src_lang, args.trg_lang, args.max_len)
+    #
+    #
+	# print ("Elapsed Time: %1.3f \n"  %(time.time() - start_time))
+    #
+	# print ("=========== Data Stat ===========")
+	# print ("Train: ", len(train_dataset))
+	# print ("val: ", len(val_dataset))
+	# print ("=================================")
+    #
+    #
+    #
+    #
+	# train_loader = data.BucketIterator(dataset=train_dataset, batch_size=args.batch_size,
+	#                                    repeat=False, shuffle=True, sort_within_batch=True,
+	#                                    sort_key=lambda x: len(x.src))
+	# val_loader = data.BucketIterator(dataset=val_dataset, batch_size=args.batch_size,
+	#                                  repeat=False, shuffle=True, sort_within_batch=True,
+	#                                  sort_key=lambda x: len(x.src))
+	# for i, batch in enumerate(tqdm(train_loader)):
+	# 	print(len(batch.src))
+	# 	print('---')
+	# 	print(batch.src[0])
+	# 	print('+++')
+	# 	print(batch.src[1])
+	# 	break
 
-	# Load dataset
-	train_file = os.path.join(args.data_path, "data_{}_{}_{}_{}.json".format(args.dataset, args.src_lang,
-										args.trg_lang, args.max_len))
-	val_file = os.path.join(args.data_path, "data_dev_{}_{}_{}.json".format(args.src_lang, args.trg_lang, args.max_len))
+	text_field, train_data, train_iter, valid_data, valid_iter, test_data, test_iter = \
+		load_data(args, TRAIN_TAB_PATH, VALID_TAB_PATH, TEST_TAB_PATH)
+    text_field.build_vocab(train_data, valid_data)
 
-	start_time = time.time()
-	if os.path.isfile(train_file) and os.path.isfile(val_file):
-		print ("Loading data..")
-		dp = DataPreprocessor()
-		train_dataset, val_dataset, vocabs = dp.load_data(train_file, val_file)
-	else:
-		print ("Preprocessing data..")
-		dp = DataPreprocessor()
-		train_dataset, val_dataset, vocabs = dp.preprocess(args.train_path, args.val_path, train_file, val_file,
-								   args.src_lang, args.trg_lang, args.max_len)
-
-
-	print ("Elapsed Time: %1.3f \n"  %(time.time() - start_time))
-
-	print ("=========== Data Stat ===========")
-	print ("Train: ", len(train_dataset))
-	print ("val: ", len(val_dataset))
-	print ("=================================")
-
-
-
-
-	train_loader = data.BucketIterator(dataset=train_dataset, batch_size=args.batch_size,
-	                                   repeat=False, shuffle=True, sort_within_batch=True,
-	                                   sort_key=lambda x: len(x.src))
-	val_loader = data.BucketIterator(dataset=val_dataset, batch_size=args.batch_size,
-	                                 repeat=False, shuffle=True, sort_within_batch=True,
-	                                 sort_key=lambda x: len(x.src))
-	for i, batch in enumerate(tqdm(train_loader)):
-		print(len(batch.src))
-		print('---')
-		print(batch.src[0])
-		print('+++')
-		print(batch.src[1])
-		break
-
-	# text_field, train_data, train_iter, valid_data, valid_iter, test_data, test_iter = \
-	# 	load_data(args, TRAIN_TAB_PATH, VALID_TAB_PATH, TEST_TAB_PATH)
-	#
-	# text_field.build_vocab(train_data, valid_data)
-
+    for batch in train_iter:
+        post, response = batch.post, batch.response
+        print(len(post))
+        print(post)
+        break
 
 	# trainer = Trainer(train_iter, valid_iter, args)
 	# trainer.train()
