@@ -80,7 +80,7 @@ class Trainer(object):
             print('Cuda Available!')
             self.model.cuda()
 
-        print (self.model)
+        # print (self.model)
         print (self.criterion)
         print (self.optimizer)
 
