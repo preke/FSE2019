@@ -64,7 +64,8 @@ class Decoder(nn.Module):
                 prev_s = self.decodercell(target, prev_s, ctx)
                 output = self.dec2word(prev_s)
                 print('Dec2vec:')
-                print(output)
+                print(output.size())
+                print(outputs.size())
                 outputs[:,i,:] = output
                 target = output.topk(1)[1]
             
