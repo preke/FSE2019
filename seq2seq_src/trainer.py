@@ -152,10 +152,10 @@ class Trainer(object):
         start_time = time.time()
 
         for i, batch in enumerate(tqdm(self.val_loader)):
-            src_input = batch.src[0];
+            src_input = batch.src[0]
             src_length = batch.src[1]
-            trg_input = batch.trg[0][:, :-1];
-            trg_output = batch.trg[0][:, 1:];
+            trg_input = batch.trg[0][:, :-1]
+            trg_output = batch.trg[0][:, 1:]
             trg_length = batch.trg[1]
             batch_size, trg_len = trg_input.size(0), trg_input.size(1)
 

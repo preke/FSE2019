@@ -42,7 +42,7 @@ def split_source_target(input_path, output_dir):
             src_writer.write(tmp_list[0])
             src_writer.write('\n')
             trg_writer.write(tmp_list[1])
-            trg_writer.write('\n')
+            # trg_writer.write('\n')
     src_writer.close()
     trg_writer.close()
 
