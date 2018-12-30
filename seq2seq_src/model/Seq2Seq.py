@@ -28,5 +28,6 @@ class Seq2Seq(nn.Module):
 
         out = self.decoder(enc_h, dec_h0, target) # B x S x H
         out = F.log_softmax(out.contiguous().view(-1, self.trg_nword))
-
+        print('seq2seq out:')
+        print(out)
         return out
