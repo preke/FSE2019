@@ -98,7 +98,7 @@ if __name__ == '__main__':
 
     # Path
     parser.add_argument('--data_path', type=str, default='../data/')
-    parser.add_argument('--train_path', type=str, default='../data/valid/')
+    parser.add_argument('--train_path', type=str, default='../data/train/')
     parser.add_argument('--val_path', type=str, default='../data/valid/')
 
     # Dir.
