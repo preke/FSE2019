@@ -124,7 +124,7 @@ class Trainer(object):
                 self.train_bleu.update(bleu_value, 1)
                 self.train_loss.update(loss.data[0], batch_size)
 
-                if i % 5000 == 0 and i != 0:
+                if i % 1000 == 0 and i != 0:
                     self.print_train_result(epoch, i, start_time)
                     self.print_sample(batch_size, epoch, i, src_input, trg_output, pred)
                     self.eval(epoch, i)
