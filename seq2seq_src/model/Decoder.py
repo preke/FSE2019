@@ -45,6 +45,9 @@ class Decoder(nn.Module):
                 dec_h[:,i,:] = prev_s# .unsqueeze(1)
 
             outputs = self.dec2word(dec_h)
+            print(dec_h.shape())
+            print('Decoder output:')
+            print(outputs)
 
         else:
             batch_size = enc_h.size(0)
