@@ -23,6 +23,9 @@ TEST_PATH = '../data/single_test_data.txt'
 TRAIN_TAB_PATH = '../data/single_train_data.tsv'
 VALID_TAB_PATH = '../data/single_valid_data.tsv'
 TEST_TAB_PATH = '../data/single_test_data.tsv'
+GLOVE_PATH = '../data/wordvec.txt'
+
+
 
 from prepro import *
 from trainer import *

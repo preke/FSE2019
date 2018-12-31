@@ -3,6 +3,17 @@ import random
 def tensor2np(tensor):
     return tensor.data.cpu().numpy()
 
+def load_glove_as_dict(filepath):
+    word_vec = {}
+    with open(filepath) as fr:
+        for line in fr:
+            line = line.split()
+            word = line[0]
+            vec = line[1:]
+            word_vec[word] = vec
+    return word_vec
+
+
 def randomChoice(batch_size):
     return random.randint(0, batch_size - 1)
 

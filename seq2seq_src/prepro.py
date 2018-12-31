@@ -42,7 +42,8 @@ class MaxlenTranslationDataset(data.Dataset):
 
 class DataPreprocessor(object):
     def __init__(self):
-        self.src_field, self.trg_field = self.generate_fields()
+        self.text_field = self.generate_fields()
+        # self.src_field, self.trg_field = self.generate_fields()
 
     def preprocess(self, train_path, val_path, train_file, val_file, max_len=None):
         # Generating torchtext dataset class
@@ -59,14 +60,18 @@ class DataPreprocessor(object):
         self.save_data(val_file, val_dataset)
 
         # Building field vocabulary
-        self.src_field.build_vocab(train_dataset, max_size=30000)
-        self.trg_field.build_vocab(train_dataset, max_size=30000)
+        self.text_field.build_vocab(train_dataset, val_dataset)
+        # self.src_field.build_vocab(train_dataset)
+        # self.trg_field.build_vocab(train_dataset)
 
-        src_vocab, trg_vocab, src_inv_vocab, trg_inv_vocab = self.generate_vocabs()
-
-        vocabs = {'src_vocab': src_vocab, 'trg_vocab': trg_vocab,
-                  'src_inv_vocab': src_inv_vocab, 'trg_inv_vocab': trg_inv_vocab}
-
+        # src_vocab, trg_vocab, src_inv_vocab, trg_inv_vocab = self.generate_vocabs()
+        vocab, inv_vocab = self.generate_vocabs()
+        # vocabs = {'src_vocab': src_vocab, 'trg_vocab': trg_vocab,
+        #          'src_inv_vocab': src_inv_vocab, 'trg_inv_vocab': trg_inv_vocab}
+        vocabs = {
+            'vocab': vocab,
+            'inv_vocab': inv_vocab
+        }
         return train_dataset, val_dataset, vocabs
 
     def load_data(self, train_file, val_file):
@@ -78,17 +83,24 @@ class DataPreprocessor(object):
         val_examples = val_dataset['examples']
 
         # Generating torchtext dataset class
-        fields = [('src', self.src_field), ('trg', self.trg_field)]
+        # fields = [('src', self.src_field), ('trg', self.trg_field)]
+        fields = [('src', self.text_field), ('trg', self.text_field)]
         train_dataset = data.Dataset(fields=fields, examples=train_examples)
         val_dataset = data.Dataset(fields=fields, examples=val_examples)
 
         # Building field vocabulary
-        self.src_field.build_vocab(train_dataset, max_size=30000)
-        self.trg_field.build_vocab(train_dataset, max_size=30000)
+        self.text_field.build_vocab(train_dataset, val_dataset)
+        # self.src_field.build_vocab(train_dataset)
+        # self.trg_field.build_vocab(train_dataset)
 
-        src_vocab, trg_vocab, src_inv_vocab, trg_inv_vocab = self.generate_vocabs()
-        vocabs = {'src_vocab': src_vocab, 'trg_vocab': trg_vocab,
-                  'src_inv_vocab': src_inv_vocab, 'trg_inv_vocab': trg_inv_vocab}
+        # src_vocab, trg_vocab, src_inv_vocab, trg_inv_vocab = self.generate_vocabs()
+        vocab, inv_vocab = self.generate_vocabs()
+        # vocabs = {'src_vocab': src_vocab, 'trg_vocab': trg_vocab,
+        #          'src_inv_vocab': src_inv_vocab, 'trg_inv_vocab': trg_inv_vocab}
+        vocabs = {
+            'vocab': vocab,
+            'inv_vocab': inv_vocab
+        }
 
         return train_dataset, val_dataset, vocabs
 
@@ -99,21 +111,27 @@ class DataPreprocessor(object):
         torch.save(dataset, data_file)
 
     def generate_fields(self):
-        src_field = data.Field(
+        text_field = data.Field(
             init_token=SOS_WORD,
             eos_token=EOS_WORD,
             pad_token=PAD_WORD,
             include_lengths=True,
             batch_first=True)
-
-        trg_field = data.Field(
-            init_token=SOS_WORD,
-            eos_token=EOS_WORD,
-            pad_token=PAD_WORD,
-            include_lengths=True,
-            batch_first=True)
-
-        return src_field, trg_field
+        return text_field
+        # src_field = data.Field(
+        #     init_token=SOS_WORD,
+        #     eos_token=EOS_WORD,
+        #     pad_token=PAD_WORD,
+        #     include_lengths=True,
+        #     batch_first=True)
+		#
+        # trg_field = data.Field(
+        #     init_token=SOS_WORD,
+        #     eos_token=EOS_WORD,
+        #     pad_token=PAD_WORD,
+        #     include_lengths=True,
+        #     batch_first=True)
+        # return src_field, trg_field
 
     def generate_data(self, data_path, max_len=None):
         dataset = MaxlenTranslationDataset(
@@ -125,14 +143,16 @@ class DataPreprocessor(object):
 
     def generate_vocabs(self):
         # Define string to index vocabs
-        src_vocab = self.src_field.vocab.stoi
-        trg_vocab = self.trg_field.vocab.stoi
+        #src_vocab = self.src_field.vocab.stoi
+        # trg_vocab = self.trg_field.vocab.stoi
+        vocab = self.text_field.stoi
 
         # Define index to string vocabs
-        src_inv_vocab = self.src_field.vocab.itos
-        trg_inv_vocab = self.trg_field.vocab.itos
+        #src_inv_vocab = self.src_field.vocab.itos
+        # trg_inv_vocab = self.trg_field.vocab.itos
 
-        return src_vocab, trg_vocab, src_inv_vocab, trg_inv_vocab
-
+        inv_vocab = self.text_field.itos
+        # return src_vocab, trg_vocab, src_inv_vocab, trg_inv_vocab
+        return vocab, inv_vocab
 
 
