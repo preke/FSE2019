@@ -18,8 +18,9 @@ class MaxlenTranslationDataset(data.Dataset):
 
     def __init__(self, path, fields, max_len=None, **kwargs):
 
-        if not isinstance(fields[0], (tuple, list)):
-            fields = [('src', fields[0]), ('trg', fields[1])]
+        # if not isinstance(fields[0], (tuple, list)):
+        #     fields = [('src', fields[0]), ('trg', fields[1])]
+        fields = [('src', fields[0]), ('trg', fields[1])]
         exts = ['src.txt', 'trg.txt']
         src_path, trg_path = tuple(os.path.expanduser(path + x) for x in exts)
 
