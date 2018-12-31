@@ -6,7 +6,7 @@ from utils import *
 
 
 class Encoder(nn.Module):
-    def __init__(self, vocab_size, embed_dim, hidden_dim, num_layers, args):
+    def __init__(self, vocab_size, embed_dim, hidden_dim, args):
         super(Encoder, self).__init__()
         self.num_layers = 2
         self.hidden_dim = hidden_dim
