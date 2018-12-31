@@ -123,6 +123,24 @@ class DataPreprocessor(object):
         # self.src_field.build_vocab(train_dataset)
         # self.trg_field.build_vocab(train_dataset)
 
+        # Building field vocabulary
+        self.text_field.build_vocab(train_dataset, val_dataset)
+        # self.src_field.build_vocab(train_dataset)
+        # self.trg_field.build_vocab(train_dataset)
+
+        embedding_dict = load_glove_as_dict(GLOVE_PATH)
+        word_vec_list = []
+        for idx, word in enumerate(self.text_field.vocab.itos):
+            if word in embedding_dict:
+                try:
+                    vector = np.array(embedding_dict[word], dtype=float).reshape(1, self.args.embed_dim)
+                except:
+                    vector = np.random.rand(1, self.args.embed_dim)
+            else:
+                vector = np.random.rand(1, self.args.embed_dim)
+            word_vec_list.append(torch.from_numpy(vector))
+        wordvec_matrix = torch.cat(word_vec_list)
+
         # src_vocab, trg_vocab, src_inv_vocab, trg_inv_vocab = self.generate_vocabs()
         vocab, inv_vocab = self.generate_vocabs()
         # vocabs = {'src_vocab': src_vocab, 'trg_vocab': trg_vocab,
@@ -132,7 +150,7 @@ class DataPreprocessor(object):
             'inv_vocab': inv_vocab
         }
 
-        return train_dataset, val_dataset, vocabs
+        return train_dataset, val_dataset, vocabs, wordvec_matrix
 
     def save_data(self, data_file, dataset):
         examples = vars(dataset)['examples']

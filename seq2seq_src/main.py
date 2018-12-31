@@ -43,7 +43,7 @@ def main(args):
     if os.path.isfile(train_file) and os.path.isfile(val_file):
       print ("Loading data..")
       dp = DataPreprocessor(args)
-      train_dataset, val_dataset, vocabs = dp.load_data(train_file, val_file)
+      train_dataset, val_dataset, vocabs, wordvec_matrix = dp.load_data(train_file, val_file)
     else:
       print ("Preprocessing data..")
       dp = DataPreprocessor(args)
