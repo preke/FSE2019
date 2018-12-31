@@ -58,10 +58,16 @@ class Trainer(object):
 
     def build_model(self, vocabs):
         # build dictionaries
-        self.src_vocab = vocabs['src_vocab']
-        self.trg_vocab = vocabs['trg_vocab']
-        self.src_inv_vocab = vocabs['src_inv_vocab']
-        self.trg_inv_vocab = vocabs['trg_inv_vocab']
+        # self.src_vocab = vocabs['src_vocab']
+        # self.trg_vocab = vocabs['trg_vocab']
+        # self.src_inv_vocab = vocabs['src_inv_vocab']
+        # self.trg_inv_vocab = vocabs['trg_inv_vocab']
+
+        self.src_vocab = vocabs['vocab']
+        self.trg_vocab = vocabs['vocab']
+        self.src_inv_vocab = vocabs['inv_vocab']
+        self.trg_inv_vocab = vocabs['inv_vocab']
+
         self.trg_soi = self.trg_vocab[SOS_WORD]
 
         self.src_nword = len(self.src_vocab)
