@@ -6,12 +6,13 @@ from utils import *
 
 
 class Encoder(nn.Module):
-    def __init__(self, vocab_size, embed_dim, hidden_dim, num_layers=2): 
+    def __init__(self, vocab_size, embed_dim, hidden_dim, num_layers=2, args):
         super(Encoder, self).__init__()
         self.num_layers = num_layers
         self.hidden_dim = hidden_dim
         
         self.embedding = nn.Embedding(vocab_size, embed_dim)
+        self.embed.weight.data.copy_(args.pretrained_weight)
         self.gru = nn.GRU(embed_dim, self.hidden_dim, self.num_layers, batch_first=True, bidirectional=True)
         
     def forward(self, source, src_length=None, hidden=None):

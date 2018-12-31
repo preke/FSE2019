@@ -5,11 +5,24 @@ import time
 import re
 import os
 from tqdm import tqdm
+import numpy as np
 
 SOS_WORD = '<SOS>'
 EOS_WORD = '<EOS>'
 PAD_WORD = '<PAD>'
+GLOVE_PATH = '../data/wordvec.txt'
 
+
+
+def load_glove_as_dict(filepath):
+    word_vec = {}
+    with open(filepath) as fr:
+        for line in fr:
+            line = line.split()
+            word = line[0]
+            vec = line[1:]
+            word_vec[word] = vec
+    return word_vec
 
 class MaxlenTranslationDataset(data.Dataset):
     # Code modified from
@@ -42,8 +55,9 @@ class MaxlenTranslationDataset(data.Dataset):
 
 
 class DataPreprocessor(object):
-    def __init__(self):
+    def __init__(self, args):
         self.text_field = self.generate_fields()
+        self.args = args
         # self.src_field, self.trg_field = self.generate_fields()
 
     def preprocess(self, train_path, val_path, train_file, val_file, max_len=None):
@@ -65,6 +79,21 @@ class DataPreprocessor(object):
         # self.src_field.build_vocab(train_dataset)
         # self.trg_field.build_vocab(train_dataset)
 
+        embedding_dict = load_glove_as_dict(GLOVE_PATH)
+        word_vec_list = []
+        for idx, word in enumerate(self.text_field.vocab.itos):
+            if word in embedding_dict:
+                try:
+                    vector = np.array(embedding_dict[word], dtype=float).reshape(1, self.args.embed_dim)
+                except:
+                    vector = np.random.rand(1, self.args.embed_dim)
+            else:
+                vector = np.random.rand(1, self.args.embed_dim)
+            word_vec_list.append(torch.from_numpy(vector))
+        wordvec_matrix = torch.cat(word_vec_list)
+
+
+
         # src_vocab, trg_vocab, src_inv_vocab, trg_inv_vocab = self.generate_vocabs()
         vocab, inv_vocab = self.generate_vocabs()
         # vocabs = {'src_vocab': src_vocab, 'trg_vocab': trg_vocab,
@@ -73,7 +102,7 @@ class DataPreprocessor(object):
             'vocab': vocab,
             'inv_vocab': inv_vocab
         }
-        return train_dataset, val_dataset, vocabs
+        return train_dataset, val_dataset, vocabs, wordvec_matrix
 
     def load_data(self, train_file, val_file):
         # Loading saved data

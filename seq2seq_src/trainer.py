@@ -38,6 +38,7 @@ class Trainer(object):
         if not os.path.exists(self.log_path): os.makedirs(self.log_path)
 
         # Hyper-parameters
+        self.args = args
         self.lr = args.lr
         self.grad_clip = args.grad_clip
         self.embed_dim = args.embed_dim
@@ -75,7 +76,7 @@ class Trainer(object):
 
         # build the model
         self.model = Seq2Seq(self.src_nword, self.trg_nword, self.num_layer, self.embed_dim, self.hidden_dim,
-                             self.max_len, self.trg_soi)
+                             self.max_len, self.trg_soi, self.args)
 
         # set the criterion and optimizer
         self.criterion = nn.NLLLoss()

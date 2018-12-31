@@ -23,7 +23,7 @@ TEST_PATH = '../data/single_test_data.txt'
 TRAIN_TAB_PATH = '../data/single_train_data.tsv'
 VALID_TAB_PATH = '../data/single_valid_data.tsv'
 TEST_TAB_PATH = '../data/single_test_data.tsv'
-GLOVE_PATH = '../data/wordvec.txt'
+
 
 
 
@@ -42,14 +42,14 @@ def main(args):
     start_time = time.time()
     if os.path.isfile(train_file) and os.path.isfile(val_file):
       print ("Loading data..")
-      dp = DataPreprocessor()
+      dp = DataPreprocessor(args)
       train_dataset, val_dataset, vocabs = dp.load_data(train_file, val_file)
     else:
       print ("Preprocessing data..")
-      dp = DataPreprocessor()
-      train_dataset, val_dataset, vocabs = dp.preprocess(args.train_path, args.val_path, train_file, val_file, args.max_len)
+      dp = DataPreprocessor(args)
+      train_dataset, val_dataset, vocabs, wordvec_matrix = dp.preprocess(args.train_path, args.val_path, train_file, val_file, args.max_len)
 
-
+    args.pretrained_weight = wordvec_matrix
     print ("Elapsed Time: %1.3f \n"  %(time.time() - start_time))
 
     print ("=========== Data Stat ===========")
