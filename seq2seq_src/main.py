@@ -86,7 +86,7 @@ if __name__ == '__main__':
     parser.add_argument('--dataset', type=str, default='fse')
     # parser.add_argument('--src_lang', type=str, default='fr')
     # parser.add_argument('--trg_lang', type=str, default='en')
-    parser.add_argument('--max_len', type=int, default=50)
+    parser.add_argument('--max_len', type=int, default=100)
 
     # Model hyper-parameters
     parser.add_argument('--lr', type=float, default=0.0001)
