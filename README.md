@@ -27,3 +27,5 @@ cd ../seq2seq_src/
 python main.py
 
 ```
+
+parameter tuning is in `seq2seq_src/main.py`
