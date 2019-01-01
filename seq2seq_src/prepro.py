@@ -126,7 +126,7 @@ class DataPreprocessor(object):
         # self.trg_field.build_vocab(train_dataset)
 
         # Building field vocabulary
-        self.text_field.build_vocab(train_dataset, val_dataset)
+        self.text_field.build_vocab(train_dataset, val_dataset, min_freq=5)
         print('******')
         print(len(self.text_field.vocab))
         # self.src_field.build_vocab(train_dataset)
