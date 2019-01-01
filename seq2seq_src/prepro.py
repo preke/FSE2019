@@ -76,6 +76,8 @@ class DataPreprocessor(object):
 
         # Building field vocabulary
         self.text_field.build_vocab(train_dataset, val_dataset)
+        print('******')
+        print(len(self.text_field.vocab))
         # self.src_field.build_vocab(train_dataset)
         # self.trg_field.build_vocab(train_dataset)
 
@@ -119,12 +121,14 @@ class DataPreprocessor(object):
         val_dataset = data.Dataset(fields=fields, examples=val_examples)
 
         # Building field vocabulary
-        self.text_field.build_vocab(train_dataset, val_dataset)
+        # self.text_field.build_vocab(train_dataset, val_dataset)
         # self.src_field.build_vocab(train_dataset)
         # self.trg_field.build_vocab(train_dataset)
 
         # Building field vocabulary
         self.text_field.build_vocab(train_dataset, val_dataset)
+        print('******')
+        print(len(self.text_field.vocab))
         # self.src_field.build_vocab(train_dataset)
         # self.trg_field.build_vocab(train_dataset)
 
