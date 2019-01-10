@@ -111,6 +111,9 @@ class Trainer(object):
                 batch_size, trg_len = trg_input.size(0), trg_input.size(1)
 
                 decoder_logit = self.model(src_input, src_length.tolist(), trg_input)
+                print(decoder_logit.size())
+                print(trg_output.size())
+                print(trg_input.size())
                 pred = decoder_logit.view(batch_size, trg_len, -1)
 
                 self.optimizer.zero_grad()
