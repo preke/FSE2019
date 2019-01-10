@@ -114,6 +114,7 @@ class Trainer(object):
                 print(decoder_logit.size())
                 print(trg_output.size())
                 print(trg_input.size())
+                print(trg_output.contiguous().view(-1).size())
                 pred = decoder_logit.view(batch_size, trg_len, -1)
 
                 self.optimizer.zero_grad()
